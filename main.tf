@@ -5,7 +5,7 @@ provider "aws" {
 # ********* S3 bucket setup for tfstate file  ********
 
 resource "aws_s3_bucket" "Tfstate_bucket" {
-  bucket = "s3prod_tfstatefile001"
+  bucket = "s3prod-tfstatefile001"
 }
 
 # resource "aws_s3_bucket_versioning" "Tfstate_versioning" {
@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "Tfstate_bucket" {
 
 # terraform {
 #   backend "s3" {
-#     bucket = "S3Prod_tfstatefile001"
+#     bucket = "s3prod-tfstatefile001"
 #     key = "S3_terraform.tfstate"
 #     region = "eu-central-1"
 #   }
