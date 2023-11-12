@@ -35,6 +35,13 @@ resource "aws_s3_bucket" "S3Prod_bucket" {
   }
 }
 
+resource "aws_s3_bucket_versioning" "S3prod_versioning" {
+    bucket = aws_s3_bucket.S3Prod_bucket.bucket
+    versioning_configuration {
+      status = "Enabled"
+    }
+}
+
 resource "aws_s3_bucket_public_access_block" "S3Prod_publicPolicy" {
     bucket = aws_s3_bucket.S3Prod_bucket.bucket
     
@@ -64,7 +71,6 @@ resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
   ]
 })
 }
-
 
 
 resource "aws_s3_bucket_website_configuration" "S3Prod_index" {
