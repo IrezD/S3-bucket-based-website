@@ -17,7 +17,7 @@ resource "aws_s3_bucket_versioning" "Tfstate_versioning" {
 
 terraform {
   backend "s3" {
-    bucket = aws_s3_bucket.Tfstate_bucket.bucket
+    bucket = "S3Prod_tfstatefile001"
     key = "S3_terraform.tfstate"
     region = "eu-central-1"
   }
