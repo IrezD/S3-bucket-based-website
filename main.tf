@@ -4,15 +4,15 @@ provider "aws" {
 
 # ********* S3 bucket setup for tfstate file  ********
 
-resource "aws_s3_bucket" "Tfstate_bucket" {
-  bucket = "s3prod-tfstatefile001"
-  tags = {
-    Name = "tfstate bucket"
-  }
-}
+# resource "aws_s3_bucket" "Tfstate_bucket" {
+#   bucket = "s3prod-tfstatefile001"
+#   tags = {
+#     Name = "tfstate bucket"
+#   }
+# }
 
 resource "aws_s3_bucket_versioning" "Tfstate_versioning" {
-  bucket = aws_s3_bucket.Tfstate_bucket.id
+  bucket = "s3prod-tfstatefile001"
   versioning_configuration {
     status = "Enabled"
   }
