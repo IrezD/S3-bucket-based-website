@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   terraform_plan:
-    name: 'Terraform Plan'
+    name: 'Review'
     runs-on: ubuntu-latest
     environment: Review
     env:
@@ -43,7 +43,7 @@ jobs:
       run: terraform plan -input=false
 
   terraform_apply:
-    name: 'Terraform Apply'
+    name: 'Live Production'
     runs-on: ubuntu-latest
     environment: Live Production
     needs: terraform_plan

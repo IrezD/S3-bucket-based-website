@@ -25,11 +25,3 @@ provider "aws" {
 #     }
 # }
 
-resource "aws_instance" "Test" {
-  ami = "ami-0a485299eeb98b979"
-  instance_type = "t2.micro"
-  tags = {
-    Name = "Test Deployment"
-  }
-}
-
