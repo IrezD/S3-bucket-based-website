@@ -43,7 +43,7 @@ jobs:
       run: terraform plan -input=false
 
   terraform_apply:
-    name: 'Terraform Plan'
+    name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: Live Production
     needs: terraform_plan
