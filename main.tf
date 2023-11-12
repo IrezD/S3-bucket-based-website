@@ -89,3 +89,11 @@ resource "aws_s3_object" "S3Prod_content" {
 
 }
 
+resource "aws_s3_object" "S3Prod_content-image" {
+  bucket = aws_s3_bucket.S3Prod_bucket.bucket
+  key    = "profile-photo.jpg"
+  source = "profile-photo.jpg"
+  etag = filemd5("profile-photo.jpg")
+
+}
+
