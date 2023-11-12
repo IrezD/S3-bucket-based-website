@@ -5,7 +5,7 @@ provider "aws" {
 # ********* S3 bucket setup for tfstate file  ********
 
 resource "aws_s3_bucket" "Tfstate_bucket" {
-  bucket = "S3Prod_tfstatefile001"
+  bucket = "s3prod_tfstatefile001"
 }
 
 # resource "aws_s3_bucket_versioning" "Tfstate_versioning" {
