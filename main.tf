@@ -12,7 +12,7 @@ resource "aws_s3_bucket" "Tfstate_bucket" {
 }
 
 resource "aws_s3_bucket_versioning" "Tfstate_versioning" {
-  bucket = aws_s3_bucket.Tfstate_bucket.bucket
+  bucket = aws_s3_bucket.Tfstate_bucket.id
   versioning_configuration {
     status = "Enabled"
   }
