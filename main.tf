@@ -26,7 +26,7 @@ terraform {
 # ********* S3 website content bucket ********
 
 resource "aws_s3_bucket" "S3Prod_bucket" {
-  bucket = "S3Prod_tfstatefile001"
+  bucket = "S3Prod-static-website001"
   tags = {
     Name = "S3Prod tf-static website"
   }
