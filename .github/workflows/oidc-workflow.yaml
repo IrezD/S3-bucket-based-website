@@ -50,9 +50,9 @@ jobs:
       run: terraform plan -input=false
 
   terraform_apply:
-    name: 'Live Production'
+    name: 'Live Production 2.0'
     runs-on: ubuntu-latest
-    environment: Review
+    environment: Live Production
     needs: terraform_plan
     
 
