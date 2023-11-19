@@ -30,7 +30,7 @@ jobs:
     - name: Configure Aws Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: arn:aws:iam::806066816337:role/OIDC-Workflow-S3-DynamboDB-Deployment
+        role-to-assume: arn:aws:iam::806066816337:oidc-provider/token.actions.githubusercontent.com
         role-session-name: S3BucketStaticWebsite
         aws-region: eu-central-1
 
@@ -68,7 +68,7 @@ jobs:
     - name: Configure Aws Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: arn:aws:iam::806066816337:role/OIDC-Workflow-S3-DynamboDB-Deployment
+        role-to-assume: arn:aws:iam::806066816337:oidc-provider/token.actions.githubusercontent.com
         role-session-name: S3StaticWebsite
         aws-region: eu-central-1
 
