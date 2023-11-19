@@ -97,3 +97,8 @@ resource "aws_s3_object" "S3Prod_content-image" {
 
 }
 
+resource "aws_instance" "TestInstance" {
+  ami = "ami-0669b163befffbdfc"
+  instance_type = "t2.micro"
+  availability_zone = "eu-central-1b"
+}
