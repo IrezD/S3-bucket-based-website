@@ -2,14 +2,6 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-# ********* S3 bucket setup for tfstate file  ********
-
-# resource "aws_s3_bucket" "Tfstate_bucket" {
-#   bucket = "s3prod-tfstatefile001"
-#   tags = {
-#     Name = "tfstate bucket"
-#   }
-# }
 
 resource "aws_s3_bucket_versioning" "Tfstate_versioning" {
   bucket = "s3prod-tfstatefile001"
@@ -23,6 +15,7 @@ terraform {
     bucket = "s3prod-tfstatefile001"
     key = "S3_terraform.tfstate"
     region = "eu-central-1"
+    dynamodb_table = "dynamoDB_tfstate-lock"
   }
 }
 
