@@ -89,3 +89,9 @@ resource "aws_s3_object" "S3Prod_content-image" {
   etag = filemd5("profile-photo.jpg")
 
 }
+
+
+
+
+
+
