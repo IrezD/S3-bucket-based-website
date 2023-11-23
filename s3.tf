@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "S3Prod_bucket" {
 }
 
 resource "aws_s3_bucket_acl" "S3Prod_acl" {
-  bucket = aws_s3_bucket.S3Prod_bucket.id
+  bucket = "s3prod-static-website001"
   acl    = "private"
 }
 
