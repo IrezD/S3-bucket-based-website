@@ -30,25 +30,25 @@ resource "aws_s3_bucket_versioning" "S3prod_versioning" {
 
 # }
 
-# resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
-#     bucket = aws_s3_bucket.S3Prod_bucket.bucket
+resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
+    bucket = aws_s3_bucket.S3Prod_bucket.bucket
 
-#     policy = jsonencode({
-#             "Id": "Policy1699808862649",
-#             "Version": "2012-10-17",
-#             "Statement": [
-#                 {
-#                 "Sid": "Stmt1699808856097",
-#                 "Action": [
-#                     "s3:GetObject"
-#                 ],
-#                 "Effect": "Allow",
-#                 "Resource": "arn:aws:s3:::s3prod-static-website001/*",
-#                 "Principal": "*"
-#                 }
-#   ]
-# })
-# }
+    policy = jsonencode({
+            "Id": "Policy1699808862649",
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                "Sid": "Stmt1699808856097",
+                "Action": [
+                    "s3:GetObject"
+                ],
+                "Effect": "Allow",
+                "Resource": "arn:aws:s3:::s3prod-static-website001/*",
+                "Principal": "*"
+                }
+  ]
+})
+}
 
 
 resource "aws_s3_bucket_website_configuration" "S3Prod_index" {

@@ -5,7 +5,7 @@ locals {
 }
 
 resource "aws_cloudfront_origin_access_control" "S3Prod_cdn_origin-access-control" {
-    name                              = "S3Prod_o"
+    name                              = "S3Prod_Orgin access control"
     description                       = "This is an origin access control for my S3 static website"
     origin_access_control_origin_type = "s3"
     signing_behavior                  = "always"
