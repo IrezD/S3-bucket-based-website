@@ -20,15 +20,15 @@ resource "aws_s3_bucket_versioning" "S3prod_versioning" {
     }
 }
 
-# resource "aws_s3_bucket_public_access_block" "S3Prod_publicPolicy" {
-#     bucket = aws_s3_bucket.S3Prod_bucket.bucket
+resource "aws_s3_bucket_public_access_block" "S3Prod_publicPolicy" {
+    bucket = aws_s3_bucket.S3Prod_bucket.bucket
     
-#     block_public_acls       = false
-#     block_public_policy     = false
-#     ignore_public_acls      = false
-#     restrict_public_buckets = false
+    block_public_acls       = true
+    block_public_policy     = true
+    ignore_public_acls      = true
+    restrict_public_buckets = true
 
-# }
+}
 
 # resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
 #     bucket = aws_s3_bucket.S3Prod_bucket.bucket
