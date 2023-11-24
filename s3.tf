@@ -8,10 +8,10 @@ resource "aws_s3_bucket" "S3Prod_bucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "S3Prod_acl" {
-  bucket = aws_s3_bucket.S3Prod_bucket.id
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "S3Prod_acl" {
+#   bucket = aws_s3_bucket.S3Prod_bucket.id
+#   acl    = "private"
+# }
 
 resource "aws_s3_bucket_versioning" "S3prod_versioning" {
     bucket = aws_s3_bucket.S3Prod_bucket.bucket
