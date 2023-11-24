@@ -75,11 +75,11 @@ resource "aws_s3_object" "S3Prod_content-image" {
 
 }
 
-# ********* S3 bucket to store logs ********
+# # ********* S3 bucket to store logs ********
 
-resource "aws_s3_bucket" "s3prod_log" {
-  bucket = "s3prod-access-logs001"
-  tags = {
-    Name = "S3 Production logs"
-  }
-}
+# resource "aws_s3_bucket" "s3prod_log" {
+#   bucket = "s3prod-access-logs001"
+#   tags = {
+#     Name = "S3 Production logs"
+#   }
+# }

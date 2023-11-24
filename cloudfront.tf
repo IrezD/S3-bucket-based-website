@@ -24,11 +24,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   comment             = "Comment about deploying CDN for my S3 bucket"
   default_root_object = "index.html"
 
-  logging_config {
-    include_cookies = false
-    bucket          = aws_s3_bucket.s3prod_log.bucket
-    prefix          = "myprefix"
-  }
+#   logging_config {
+#     include_cookies = false
+#     bucket          = aws_s3_bucket.s3prod_log.bucket
+#     prefix          = "myprefix"
+#   }
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
