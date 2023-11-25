@@ -30,8 +30,21 @@ resource "aws_s3_bucket_public_access_block" "S3Prod_publicPolicy" {
 
 }
 
-# resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
-#     bucket = aws_s3_bucket.S3Prod_bucket.bucket
+data "aws_iam_policy_document" "s3Prod_policy" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.S3Prod_bucket.arn}/*"]
+
+    principals {
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.S3Prod_OAI.iam_arn]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
+    bucket = aws_s3_bucket.S3Prod_bucket.bucket
+    policy = data.aws_iam_policy_document.s3Prod_policy.json
 
 #     policy = jsonencode({
 #             "Id": "Policy1699808862649",
@@ -48,7 +61,8 @@ resource "aws_s3_bucket_public_access_block" "S3Prod_publicPolicy" {
 #                 }
 #   ]
 # })
-# }
+
+}
 
 
 resource "aws_s3_bucket_website_configuration" "S3Prod_index" {

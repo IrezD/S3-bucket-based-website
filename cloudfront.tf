@@ -4,6 +4,10 @@ locals {
   s3_origin_id = "S3Prod_Origin_ID"
 }
 
+resource "aws_cloudfront_origin_access_identity" "S3Prod_OAI" {
+  comment = "Some comment for OAI"
+}
+
 resource "aws_cloudfront_origin_access_control" "S3Prod_cdn_origin-access-control" {
     name                              = "S3Prod_Orgin access control"
     description                       = "This is an origin access control for my S3 static website"
@@ -17,6 +21,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     domain_name              = aws_s3_bucket.S3Prod_bucket.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.S3Prod_cdn_origin-access-control.id
     origin_id                = local.s3_origin_id
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.S3Prod_OAI.cloudfront_access_identity_path
+    }
   }
 
   enabled             = true
@@ -64,3 +71,5 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     cloudfront_default_certificate = true
   }
 }  
+
+
