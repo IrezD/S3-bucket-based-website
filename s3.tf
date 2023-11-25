@@ -32,12 +32,19 @@ resource "aws_s3_bucket_public_access_block" "S3Prod_publicPolicy" {
 
 data "aws_iam_policy_document" "s3Prod_policy" {
   statement {
+    sid = "CloudFrontCachingfromS3"
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.S3Prod_bucket.arn}/*"]
 
     principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.S3Prod_OAI.iam_arn]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    condition {
+      test = "StringEquals"
+      variable = "AWS:SourceArn"
+      values = [aws_cloudfront_distribution.s3_distribution.arn]
     }
   }
 }
