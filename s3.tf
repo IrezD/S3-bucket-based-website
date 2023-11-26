@@ -36,11 +36,11 @@ data "aws_iam_policy_document" "s3Prod_policy" {
       identifiers = ["cloudfront.amazonaws.com"]
     }
 
-    # condition {
-    #   test = "StringEquals"
-    #   variable = "AWS:SourceArn"
-    #   values = [aws_cloudfront_distribution.s3_distribution.arn]
-    # }
+    condition {
+      test = "StringEquals"
+      variable = "AWS:SourceArn"
+      values = [aws_cloudfront_distribution.s3_distribution.arn]
+    }
   }
 }
 
