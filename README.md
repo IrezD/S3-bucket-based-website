@@ -1,6 +1,6 @@
 # S3-bucket-based-website
 
-Bucket Endpoint link: http://s3prod-static-website001.s3-website.eu-central-1.amazonaws.com
+website link: https://d281vnll4p45vm.cloudfront.net/
 
 Description of the task: 
 
@@ -18,11 +18,3 @@ The project's primary components include:
 
 Overall, the project aims to establish a streamlined, automated process for managing and deploying a static website hosted on an S3 bucket using Terraform and GitHub Actions, ensuring efficiency, consistency, and ease of maintenance.
 
-
-**************** Outlining the steps to be done ****************
-- Create main terraform file
-- Create Index file
-- Setup Workflow with Github Action (2 stage - 'Review' and 'Live Production')
-- Deploy two S3 buckets - a Private one to store the .tfstate file and the other with Public Access to handle web content/hosting.
-- Commit all files (including Index file) from local machine to Github main branch which is then pulled to the S3 bucket to enables any changes pushed to the main branch to seemlessly update the file in S3 and redeploy the website.
-- Versioning enabled via Terraform on both buckets to allow me revert to previous state if necessary.
