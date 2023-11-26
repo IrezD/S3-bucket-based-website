@@ -8,11 +8,6 @@ resource "aws_s3_bucket" "S3Prod_bucket" {
   }
 }
 
-# resource "aws_s3_bucket_acl" "S3Prod_acl" {
-#   bucket = aws_s3_bucket.S3Prod_bucket.id
-#   acl       
-# }
-
 resource "aws_s3_bucket_versioning" "S3prod_versioning" {
     bucket = aws_s3_bucket.S3Prod_bucket.bucket
     versioning_configuration {
@@ -32,7 +27,7 @@ resource "aws_s3_bucket_public_access_block" "S3Prod_publicPolicy" {
 
 data "aws_iam_policy_document" "s3Prod_policy" {
   statement {
-    sid = "CloudFrontCachingfromS3"
+    sid = "CloudFrontCachingfromPrivateS3"
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.S3Prod_bucket.arn}/*"]
 
@@ -41,33 +36,17 @@ data "aws_iam_policy_document" "s3Prod_policy" {
       identifiers = ["cloudfront.amazonaws.com"]
     }
 
-    condition {
-      test = "StringEquals"
-      variable = "AWS:SourceArn"
-      values = [aws_cloudfront_distribution.s3_distribution.arn]
-    }
+    # condition {
+    #   test = "StringEquals"
+    #   variable = "AWS:SourceArn"
+    #   values = [aws_cloudfront_distribution.s3_distribution.arn]
+    # }
   }
 }
 
 resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
     bucket = aws_s3_bucket.S3Prod_bucket.bucket
     policy = data.aws_iam_policy_document.s3Prod_policy.json
-
-#     policy = jsonencode({
-#             "Id": "Policy1699808862649",
-#             "Version": "2012-10-17",
-#             "Statement": [
-#                 {
-#                 "Sid": "Stmt1699808856097",
-#                 "Action": [
-#                     "s3:GetObject"
-#                 ],
-#                 "Effect": "Allow",
-#                 "Resource": "arn:aws:s3:::s3prod-static-website001/*",
-#                 "Principal": "*"
-#                 }
-#   ]
-# })
 
 }
 
