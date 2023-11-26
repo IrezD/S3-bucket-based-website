@@ -1,5 +1,5 @@
 
-name: 'OIDC-Terraform'
+name: 'Active OIDC-Tf Workflow'
 
 on:
   push:
