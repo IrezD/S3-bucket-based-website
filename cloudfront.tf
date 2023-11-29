@@ -44,9 +44,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       }
     }
 
-    viewer_protocol_policy = "allow-all" # --- I will change this to 'redirect-to-https' after initial deployment
+    viewer_protocol_policy = "redirect-to-https" 
     min_ttl                = 0
-    default_ttl            = 3600        # --- Need to play around with the TTL after initial deployment
+    default_ttl            = 3600       
     max_ttl                = 86400
   }
 
@@ -63,7 +63,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   viewer_certificate {
     cloudfront_default_certificate = true
-  }
+    acm_certificate_arn = "arn:aws:acm:us-east-1:806066816337:certificate/06323327-39e1-485a-9cc8-47221a2f4dc6"
 }  
 
 
