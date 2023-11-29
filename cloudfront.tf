@@ -23,6 +23,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   is_ipv6_enabled     = true
   comment             = "Comment about deploying CDN for my S3 bucket"
   default_root_object = "index.html"
+  aliases = [ "dennis.owie.com" ]
 
 #   logging_config {
 #     include_cookies = false
