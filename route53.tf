@@ -13,7 +13,7 @@ resource "aws_route53_record" "s3Prod_cdn_config" {
 
 resource "aws_route53_record" "s3Prod_test-cdn" {
   zone_id = "Z0822301268JPSC1M6XE6"
-  name    = "test.dennisowie.com"
+  name    = "dev.dennisowie.com"
   type    = "A"
 
   alias {
@@ -22,3 +22,4 @@ resource "aws_route53_record" "s3Prod_test-cdn" {
     evaluate_target_health = true
   }
 }
+

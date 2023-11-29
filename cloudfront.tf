@@ -25,11 +25,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   default_root_object = "index.html"
   aliases = [ "dennisowie.com" ]
 
-#   logging_config {
-#     include_cookies = false
-#     bucket          = aws_s3_bucket.s3prod_log.bucket
-#     prefix          = "myprefix"
-#   }
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
