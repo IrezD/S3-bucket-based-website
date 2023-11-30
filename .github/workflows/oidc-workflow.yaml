@@ -98,6 +98,10 @@
           branches:
             - main
             - dev-branch
+
+      permissions:
+        id-token: write
+        contents: read
       
       jobs:
         deploy:
