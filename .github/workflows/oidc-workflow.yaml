@@ -129,6 +129,7 @@
           name: 'Review'
           runs-on: ubuntu-latest
           environment: Review
+          needs: deploy
                 
           # Use the Bash shell regardless of the GitHub Actions runner's OS
           defaults:
