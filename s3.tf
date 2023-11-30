@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "s3Prod_policy" {
     condition {
       test = "StringEquals"
       variable = "AWS:SourceArn"
-      values = [aws_cloudfront_distribution.s3_distribution.arn]
+      values = [aws_cloudfront_distribution.s3_distribution.arn, aws_cloudfront_distribution.s3_dev-distribution.arn]
     }
   }
 }
