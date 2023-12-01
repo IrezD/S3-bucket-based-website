@@ -124,6 +124,8 @@
                 elif [ "$GITHUB_REF" == "refs/heads/dev-branch" ]; then
                   DOMAIN="dev.dennisowie.com"
                 fi
+
+                echo "DOMAIN = $DOMAIN"
       
         terraform_plan:
           name: 'Review'
