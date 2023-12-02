@@ -4,7 +4,6 @@ name: 'Test Deployment'
 on:
   push:
     branches: [ "dev-branch"]
-  pull_request:
     
 permissions:
   id-token: write
@@ -43,7 +42,6 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan -input=false
-           terraform plan -input=false -lock=false
 
   terraform_apply:
     name: 'Deploy Changes'
@@ -76,7 +74,6 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
-            terraform apply -lock=false
 
 
 
