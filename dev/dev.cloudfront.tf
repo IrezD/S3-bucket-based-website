@@ -1,11 +1,20 @@
 locals {
-  s3_origin_id = "S3Prod_Origin_ID"
+  s3_origin_id = "Dev_S3Prod_Origin_ID"
 }
+
+resource "aws_cloudfront_origin_access_control" "dev_S3Prod_cdn_origin-access-control" {
+    name                              = "Dev environment - S3Prod_Orgin access control"
+    description                       = "OAC for the test environment of my S3 static website"
+    origin_access_control_origin_type = "s3"
+    signing_behavior                  = "always"
+    signing_protocol                  = "sigv4"
+}
+
 
 resource "aws_cloudfront_distribution" "s3_dev-distribution" {
   origin {
-    domain_name              = aws_s3_bucket.S3Prod_bucket.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.S3Prod_cdn_origin-access-control.id
+    domain_name              = aws_s3_bucket.dev_S3Prod_bucket.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.dev_S3Prod_cdn_origin-access-control.id
     origin_id                = local.s3_origin_id
   }
 
@@ -43,7 +52,7 @@ resource "aws_cloudfront_distribution" "s3_dev-distribution" {
   }
 
   tags = {
-    Name = "S3Prod_dev-Environment"
+    Name = "S3Prod_CDN_Dev"
   }
 
   viewer_certificate {
