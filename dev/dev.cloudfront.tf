@@ -11,7 +11,7 @@ resource "aws_cloudfront_origin_access_control" "dev_S3Prod_cdn_origin-access-co
 }
 
 
-resource "aws_cloudfront_distribution" "s3_dev-distribution" {
+resource "aws_cloudfront_distribution" "dev_s3_dev-distribution" {
   origin {
     domain_name              = aws_s3_bucket.dev_S3Prod_bucket.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.dev_S3Prod_cdn_origin-access-control.id

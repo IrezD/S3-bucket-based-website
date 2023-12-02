@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "dev_S3Prod_bucket" {
   }
 }
 
-resource "aws_s3_bucket_versioning" "S3prod_versioning" {
+resource "aws_s3_bucket_versioning" "dev_S3prod_versioning" {
     bucket = aws_s3_bucket.dev_S3Prod_bucket.bucket
     versioning_configuration {
       status = "Enabled"
