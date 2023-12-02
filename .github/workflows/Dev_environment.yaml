@@ -1,9 +1,9 @@
 
-name: 'Deployment to Dev_Environment'
+name: 'Deployment to Dev Environment'
 
 on:
   push:
-    branches: [ "dev-branch" ]
+    branches: [ "dev-branch", "main" ]
 
 permissions:
   id-token: write
@@ -42,6 +42,7 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan -input=false
+           terraform plan -input=false -lock=false
 
   terraform_apply:
     name: 'Deploy Changes'
@@ -74,6 +75,7 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
+            terraform apply -lock=false
 
 
 
