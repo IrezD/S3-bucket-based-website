@@ -1,9 +1,9 @@
 
-name: 'Deployment to Dev Environment'
+name: 'Test Deployment'
 
 on:
   push:
-    branches: [ "dev-branch", "main" ]
+    branches: [ "dev-branch"]
   pull_request:
     
 permissions:
