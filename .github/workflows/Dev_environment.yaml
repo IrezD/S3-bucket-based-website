@@ -4,7 +4,6 @@ name: 'Deployment to Dev Environment'
 on:
   push:
     branches: [ "dev-branch" ]
-  pull_request:
 
 permissions:
   id-token: write
