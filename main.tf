@@ -19,6 +19,9 @@ terraform {
   }
 }
 
+module "resource" {
+  source = "./dev"
+}
 
 
 

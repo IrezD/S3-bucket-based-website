@@ -1,0 +1,186 @@
+
+name: 'Deployment to Dev Environment'
+
+on:
+  push:
+    branches: [ "dev-branch", "main" ]
+  pull_request:
+    
+permissions:
+  id-token: write
+  contents: read
+
+
+jobs:
+  terraform_plan:
+    name: 'Review'
+    runs-on: ubuntu-latest
+    environment: Review
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        role-to-assume: arn:aws:iam::806066816337:role/OIDC-Github-Workflow-Config
+        role-session-name: S3BucketStaticWebsite
+        aws-region: eu-central-1
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      run: terraform plan -input=false
+           terraform plan -input=false -lock=false
+
+  terraform_apply:
+    name: 'Deploy Changes'
+    runs-on: ubuntu-latest
+    environment: Live Production
+    needs: terraform_plan
+    
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        role-to-assume: arn:aws:iam::806066816337:role/OIDC-Github-Workflow-Config
+        role-session-name: S3BucketStaticWebsite
+        aws-region: eu-central-1
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
+            terraform apply -lock=false
+
+
+
+      # New workflow configuration for 2 environment
+
+      # name: Deploy Website
+
+      # on:
+      #   push:
+      #     branches:
+      #       - main
+      #       - dev-branch
+
+      # permissions:
+      #   id-token: write
+      #   contents: read
+      
+      # jobs:
+      #   deploy:
+      #     runs-on: ubuntu-latest
+      #     steps:
+      #       - name: Checkout code
+      #         uses: actions/checkout@v3
+      
+      #       - name: Configure AWS Credentials
+      #         uses: aws-actions/configure-aws-credentials@v3
+      #         with:
+      #           role-to-assume: arn:aws:iam::806066816337:role/OIDC-Github-Workflow-Config
+      #           role-session-name: S3BucketStaticWebsite
+      #           aws-region: eu-central-1
+      
+      #       - name: Deploy to Environment
+      #         run: |
+      #           if [ "$GITHUB_REF" == "refs/heads/main" ]; then
+      #             DOMAIN="dennisowie.com"
+      #           elif [ "$GITHUB_REF" == "refs/heads/dev-branch" ]; then
+      #             DOMAIN="dev.dennisowie.com"
+      #           fi
+
+      #           echo "DOMAIN = $DOMAIN"
+      
+      #   terraform_plan:
+      #     name: 'Review'
+      #     runs-on: ubuntu-latest
+      #     environment: Review
+      #     needs: deploy
+                
+      #     # Use the Bash shell regardless of the GitHub Actions runner's OS
+      #     defaults:
+      #       run:
+      #         shell: bash
+                
+      #     steps:
+      #       - name: Checkout
+      #         uses: actions/checkout@v3
+                
+      #       - name: Configure AWS Credentials
+      #         uses: aws-actions/configure-aws-credentials@v3
+      #         with:
+      #           role-to-assume: arn:aws:iam::806066816337:role/OIDC-Github-Workflow-Config
+      #           role-session-name: S3BucketStaticWebsite
+      #           aws-region: eu-central-1
+                
+      #       - name: Setup Terraform
+      #         uses: hashicorp/setup-terraform@v3
+      #         with:
+      #           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+                
+      #       - name: Terraform Init
+      #         run: terraform init
+                
+      #       - name: Terraform Plan
+      #         run: terraform plan -input=false
+      
+      #   terraform_apply:
+      #     name: 'Live Production 2.0'
+      #     runs-on: ubuntu-latest
+      #     environment: Live Production
+      #     needs: terraform_plan
+                    
+      #     # Use the Bash shell regardless of the GitHub Actions runner's OS
+      #     defaults:
+      #       run:
+      #         shell: bash
+                
+      #     steps:
+      #       - name: Checkout
+      #         uses: actions/checkout@v3
+                
+      #       - name: Configure AWS Credentials
+      #         uses: aws-actions/configure-aws-credentials@v3
+      #         with:
+      #           role-to-assume: arn:aws:iam::806066816337:role/OIDC-Github-Workflow-Config
+      #           role-session-name: S3BucketStaticWebsite
+      #           aws-region: eu-central-1
+                
+      #       - name: Setup Terraform
+      #         uses: hashicorp/setup-terraform@v3
+      #         with:
+      #           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+                
+      #       - name: Terraform Init
+      #         run: terraform init
+                
+      #       - name: Terraform Apply
+      #         run: terraform apply -auto-approve -input=false
+      
