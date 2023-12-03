@@ -62,15 +62,15 @@ resource "aws_s3_bucket_website_configuration" "dev_S3Prod_index" {
 resource "aws_s3_object" "dev_S3Prod_content" {
   bucket = aws_s3_bucket.dev_S3Prod_bucket.bucket
   key    = "index.html"
-  source = "index.html"
-  etag = filemd5("index.html")
+  source = "./index.html"
+  etag = filemd5("./index.html")
 
 }
 
 resource "aws_s3_object" "dev_S3Prod_content-image" {
   bucket = aws_s3_bucket.dev_S3Prod_bucket.bucket
   key    = "profile-photo.jpg"
-  source = "profile-photo.jpg"
-  etag = filemd5("profile-photo.jpg")
+  source = "./profile-photo.jpg"
+  etag = filemd5("./profile-photo.jpg")
 
 }
