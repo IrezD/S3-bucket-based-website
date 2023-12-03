@@ -39,12 +39,11 @@ data "aws_iam_policy_document" "s3Prod_policy" {
     condition {
       test = "StringEquals"
       variable = "AWS:SourceArn"
-      values = [aws_cloudfront_distribution.s3_distribution.arn],
-      test = "StringLike"
-      "CommitMessage": "main branch"
+      values = [aws_cloudfront_distribution.s3_distribution.arn]
     }
   }
 }
+
 
 resource "aws_s3_bucket_policy" "S3Prod_JsonPolicy" {
     bucket = aws_s3_bucket.S3Prod_bucket.bucket
