@@ -76,86 +76,85 @@
 #       run: terraform apply -auto-approve -input=false
 
 
+name: 'Test Deployment'
 
-      name: 'Test Deployment'
+on:
+  push:
+    branches: [ "dev-branch"]
 
-      on:
-        push:
-          branches: [ "dev-branch"]
-          
-      permissions:
-        id-token: write
-        contents: read
-      
-      jobs:
-        deploy_changes:
-          runs-on: ubuntu-latest
-          environment: Review
-      
-          permissions:
-            id-token: write
-            contents: read
-      
-            steps:
-              - name: Checkout
-                uses: actions/checkout@v3
-          
-              - name: Configure AWS Credentials
-                uses: aws-actions/configure-aws-credentials@v3
-                with:
-                  role-to-assume: arn:aws:iam::806066816337:role/OIDC-DEV-Environment-for-S3Prod
-                  role-session-name: Dev-EnvironmentRole-S3Prod
-                  aws-region: eu-central-1
-      
-              - name: Check if changes are allowed
-                id: check_changes
-                run: |
-                  CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-          
-                  if echo "$CHANGED_FILES" | grep -q "s3prod-static-website001"; then
-                    echo "Changes to production bucket are not allowed."
-                    echo "::set-output name=changes_allowed::false"
-                  else
-                    echo "Changes are allowed."
-                    echo "::set-output name=changes_allowed::true"
-                  fi
-        
-              - name: Terraform Init
-                run: terraform init
+permissions:
+  id-token: write
+  contents: read
 
-              - name: Terraform Plan
-                run: terraform plan -input=false
+jobs:
+  deploy_changes:
+    runs-on: ubuntu-latest
+    environment: Review
 
-              terraform_apply:
-                name: 'Deploy Changes'
-                runs-on: ubuntu-latest
-                environment: Live Production
-                needs: terraform_plan
-                
-                defaults:
-                  run:
-                    shell: bash
+    permissions:
+      id-token: write
+      contents: read
 
-                steps:
-                - name: Checkout
-                  uses: actions/checkout@v3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-                - name: Configure AWS Credentials
-                  uses: aws-actions/configure-aws-credentials@v3
-                  with:
-                    role-to-assume: arn:aws:iam::806066816337:role/OIDC-DEV-Environment-for-S3Prod
-                    role-session-name: Dev-EnvironmentRole-S3Prod
-                    aws-region: eu-central-1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::806066816337:role/OIDC-DEV-Environment-for-S3Prod
+          role-session-name: Dev-EnvironmentRole-S3Prod
+          aws-region: eu-central-1
 
-                - name: Setup Terraform
-                  uses: hashicorp/setup-terraform@v3
-                  with:
-                    cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Check if changes are allowed
+        id: check_changes
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
 
-                - name: Terraform Init
-                  run: terraform init
+          if echo "$CHANGED_FILES" | grep -q "s3prod-static-website001"; then
+            echo "Changes to the production bucket are not allowed."
+            echo "::set-output name=changes_allowed::false"
+          else
+            echo "Changes are allowed."
+            echo "::set-output name=changes_allowed::true"
+          fi
 
-                - name: Terraform Apply
-                  run: terraform apply -auto-approve -input=false
-              
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+  terraform_apply:
+    name: 'Deploy Changes'
+    runs-on: ubuntu-latest
+    environment: Live Production
+    # needs: terraform_plan
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::806066816337:role/OIDC-DEV-Environment-for-S3Prod
+          role-session-name: Dev-EnvironmentRole-S3Prod
+          aws-region: eu-central-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
+
               
